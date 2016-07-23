@@ -1,0 +1,23 @@
+{
+    "name": "toodledo-api",
+    "version": "0.0.1-alpha",
+    "description": "A simple Node.js module to interact with the Toodledo API",
+    "author": "Bill Parrott <bill@chimericdream.com>",
+    "homepage": "https://github.com/chimericdream/node-toodledo",
+    "scripts": {
+        "test": ""
+    },
+    "main": "src/toodledo-api.js",
+    "repository": "chimericdream/node-toodledo",
+    "bugs": {
+        "url": "https://github.com/chimericdream/node-toodledo/issues"
+    },
+    "keywords": [
+        "toodledo",
+        "api",
+        "rest"
+    ],
+    "dependencies": {},
+    "devDependencies": {},
+    "license": "MIT"
+}
