@@ -15,7 +15,7 @@ module.exports = class Auth {
             baseUrl: 'https://api.toodledo.com/3'
         }, options);
 
-        return proxy(this);
+        return proxy(this, ['options'], ['options']);
     }
 
     authUrl() {
