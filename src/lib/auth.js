@@ -1,9 +1,8 @@
 'use strict';
 
 const _ = require('lodash');
+const proxy = require('better-es6-proxies');
 const uuid = require('node-uuid');
-
-const proxy = require('./util/proxy');
 
 module.exports = class Auth {
     constructor(options) {
