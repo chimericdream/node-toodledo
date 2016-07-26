@@ -1,27 +1,61 @@
 'use strict';
 
-const Auth = require('./lib/auth');
-//const httpServer = require('./http-server');
+const _ = require('lodash');
+const http = require('http');
+const opn = require('opn');
+const proxy = require('better-es6-proxies');
+const url = require('url');
+const uuid = require('node-uuid');
 
-var temp = new Auth({
-    client: {
-        id: 'chimericdream',
-        secret: 'secret'
+class API {
+    constructor(options) {
+        this.options = _.merge({
+            clientID: '',
+            baseUrl: 'https://api.toodledo.com/3',
+            scopes: {
+                basic: true,
+                tasks: true,
+                notes: true,
+                outlines: true,
+                lists: true,
+                share: true,
+                write: true
+            }
+        }, options);
+
+        return proxy(this, ['options'], ['options']);
     }
+
+    getScope() {
+        let str = '';
+        Object.keys(this.scopes).forEach((scope) => {
+            if (this.scopes[scope]) {
+                str += `${scope}%20`;
+            }
+        });
+        return str.replace(/^(.+)\%20$/, '$1');
+    }
+
+    authUrl() {
+        return `${this.baseUrl}/account/authorize.php?response_type=code&client_id=${this.clientID}&state=${uuid.v4()}&scope=${this.getScope()}`;
+    }
+};
+
+let api = new API({
+    clientID: 'chimericdream'
 });
 
-//console.log(temp.authUrl());
-//console.log(temp.client.id);
-//console.log(temp.someprop);
-//temp.someprop = 'newval';
-//console.log(temp.someprop);
-//console.log(temp.objprop);
-//temp.objprop = {c: 'newobjprop'};
-//console.log(temp.objprop);
-//console.log(temp.undefprop);
-//temp.undefprop = 'no longer undefined';
-//console.log(temp.undefprop);
-temp.client = false;
-//console.log(temp.client.id);
+//opn(api.authUrl(), {app: ['chrome']});
 
-module.exports = {};
+var server = http.createServer((request, response) => {
+    var qs = url.parse(request.url, true).query;
+    console.log("REQUEST\n\n");
+    console.log(request);
+    console.log("----------------------------\n\n");
+    console.log("QS\n\n");
+    console.log(qs);
+    console.log('----------------------------');
+    response.end();
+});
+
+server.listen(8081);
