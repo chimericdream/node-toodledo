@@ -1,16 +1,19 @@
 'use strict';
 
 const _ = require('lodash');
-const http = require('http');
-const opn = require('opn');
-const proxy = require('better-es6-proxies');
-const url = require('url');
+const rp = require('request-promise-native');
+const proxy = require('proxy-mate');
 const uuid = require('node-uuid');
 
-class API {
+const btoa = require('./lib/btoa');
+
+const AccountInfo = require('./models/account-info');
+
+module.exports = class ToodledoApi {
     constructor(options) {
         this.options = _.merge({
-            clientID: '',
+            clientId: '',
+            clientSecret: '',
             baseUrl: 'https://api.toodledo.com/3',
             scopes: {
                 basic: true,
@@ -22,6 +25,12 @@ class API {
                 write: true
             }
         }, options);
+
+        this.authCode = '';
+        this.accessToken = '';
+        this.refreshToken = '';
+
+        this.account = null;
 
         return proxy(this, ['options'], ['options']);
     }
@@ -37,25 +46,60 @@ class API {
     }
 
     authUrl() {
-        return `${this.baseUrl}/account/authorize.php?response_type=code&client_id=${this.clientID}&state=${uuid.v4()}&scope=${this.getScope()}`;
+        return `${this.baseUrl}/account/authorize.php?response_type=code&client_id=${this.clientId}&state=${uuid.v4()}&scope=${this.getScope()}`;
+    }
+
+    getAccessToken() {
+        return rp({
+            uri: `${this.baseUrl}/account/token.php`,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+            },
+            body: {
+                grant_type: 'authorization_code',
+                code: this.authCode
+            },
+            json: true
+        }).then((body) => {
+            this.accessToken = body.access_token;
+            this.refreshToken = body.refresh_token;
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    refreshAccessToken() {
+        return rp({
+            uri: `${this.baseUrl}/account/token.php`,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+            },
+            body: {
+                grant_type: 'refresh_token',
+                refresh_token: this.refreshToken
+            },
+            json: true
+        }).then((body) => {
+            this.accessToken = body.access_token;
+            this.refreshToken = body.refresh_token;
+            console.dir(body);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    getAccountInfo() {
+        return rp({
+            uri: `${this.baseUrl}/account/get.php?access_token=${this.accessToken}`,
+            method: 'GET',
+            json: true
+        }).then((body) => {
+            this.account = new AccountInfo(body);
+            console.log(this.account);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 };
-
-let api = new API({
-    clientID: 'chimericdream'
-});
-
-//opn(api.authUrl(), {app: ['chrome']});
-
-var server = http.createServer((request, response) => {
-    var qs = url.parse(request.url, true).query;
-    console.log("REQUEST\n\n");
-    console.log(request);
-    console.log("----------------------------\n\n");
-    console.log("QS\n\n");
-    console.log(qs);
-    console.log('----------------------------');
-    response.end();
-});
-
-server.listen(8081);
