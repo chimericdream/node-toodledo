@@ -4,12 +4,12 @@ const _ = require('lodash');
 const proxy = require('proxy-mate');
 
 module.exports = class Collaborator {
-    constructor(data, api) {
-        this.data = _.merge({
-        }, data);
+    constructor(api) {
+        this.data = {
+        };
 
         this.api = api;
 
-        return proxy(this, ['api'], ['data']);
+        return proxy(this, [], ['data']);
     }
 };

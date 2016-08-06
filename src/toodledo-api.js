@@ -7,9 +7,44 @@ const uuid = require('node-uuid');
 
 const btoa = require('./lib/btoa');
 
-const AccountInfo = require('./models/account-info');
+// Exceptions
+const AccountException = require('./exceptions/account');
+const ApiException = require('./exceptions/api');
+const ContextException = require('./exceptions/context');
+const FolderException = require('./exceptions/folder');
+const GoalException = require('./exceptions/goal');
+const LocationException = require('./exceptions/location');
+const TaskException = require('./exceptions/task');
 
-module.exports = class ToodledoApi {
+// Models
+const AccountInfo = require('./models/account-info');
+const AttachmentModel = require('./models/attachment');
+const CollaboratorModel = require('./models/collaborator');
+const ContextModel = require('./models/context');
+const FolderModel = require('./models/folder');
+const GoalModel = require('./models/goal');
+const ListModel = require('./models/list');
+const LocationModel = require('./models/location');
+const NoteModel = require('./models/note');
+const OutlineModel = require('./models/outline');
+const RowModel = require('./models/row');
+const SavedSearchModel = require('./models/saved-search');
+const TaskModel = require('./models/task');
+
+// Collections
+const CollaboratorCollection = require('./collections/collaborators');
+const ContextCollection = require('./collections/contexts');
+const FolderCollection = require('./collections/folders');
+const GoalCollection = require('./collections/goals');
+const ListCollection = require('./collections/lists');
+const LocationCollection = require('./collections/locations');
+const NoteCollection = require('./collections/notes');
+const OutlineCollection = require('./collections/outlines');
+const RowCollection = require('./collections/rows');
+const SavedSearchCollection = require('./collections/saved-searches');
+const TaskCollection = require('./collections/tasks');
+
+class ToodledoApi {
     constructor(options) {
         this.options = _.merge({
             clientId: '',
@@ -45,7 +80,7 @@ module.exports = class ToodledoApi {
         return str.replace(/^(.+)\%20$/, '$1');
     }
 
-    authUrl() {
+    getAuthUrl() {
         return `${this.baseUrl}/account/authorize.php?response_type=code&client_id=${this.clientId}&state=${uuid.v4()}&scope=${this.getScope()}`;
     }
 
@@ -89,17 +124,45 @@ module.exports = class ToodledoApi {
             console.log(error);
         });
     }
+};
 
-    getAccountInfo() {
-        return rp({
-            uri: `${this.baseUrl}/account/get.php?access_token=${this.accessToken}`,
-            method: 'GET',
-            json: true
-        }).then((body) => {
-            this.account = new AccountInfo(body);
-            console.log(this.account);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+module.exports = {
+    API: ToodledoApi,
+
+    // Exceptions
+    AccountException: AccountException,
+    ApiException: ApiException,
+    ContextException: ContextException,
+    FolderException: FolderException,
+    GoalException: GoalException,
+    LocationException: LocationException,
+    TaskException: TaskException,
+
+    // Models
+    AccountInfo: AccountInfo,
+    AttachmentModel: AttachmentModel,
+    CollaboratorModel: CollaboratorModel,
+    ContextModel: ContextModel,
+    FolderModel: FolderModel,
+    GoalModel: GoalModel,
+    ListModel: ListModel,
+    LocationModel: LocationModel,
+    NoteModel: NoteModel,
+    OutlineModel: OutlineModel,
+    RowModel: RowModel,
+    SavedSearchModel: SavedSearchModel,
+    TaskModel: TaskModel,
+
+    // Collections
+    CollaboratorCollection: CollaboratorCollection,
+    ContextCollection: ContextCollection,
+    FolderCollection: FolderCollection,
+    GoalCollection: GoalCollection,
+    ListCollection: ListCollection,
+    LocationCollection: LocationCollection,
+    NoteCollection: NoteCollection,
+    OutlineCollection: OutlineCollection,
+    RowCollection: RowCollection,
+    SavedSearchCollection: SavedSearchCollection,
+    TaskCollection: TaskCollection
 };

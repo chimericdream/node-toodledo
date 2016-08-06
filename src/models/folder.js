@@ -4,12 +4,17 @@ const _ = require('lodash');
 const proxy = require('proxy-mate');
 
 module.exports = class Folder {
-    constructor(data, api) {
+    constructor(api, existingData = {}) {
         this.data = _.merge({
-        }, data);
+            'id': 0,
+            'name': '',
+            'private': 0,
+            'archived': 0,
+            'ord': 0
+        }, existingData);
 
         this.api = api;
 
-        return proxy(this, ['api'], ['data']);
+        return proxy(this, [], ['data']);
     }
 };

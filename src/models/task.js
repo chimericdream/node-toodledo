@@ -54,8 +54,8 @@ module.exports = class Task {
         };
     };
 
-    constructor(data, api) {
-        this.data = _.merge({
+    constructor(api) {
+        this.data = {
             'id': null,
             'title': null,
             'modified': null,
@@ -89,15 +89,15 @@ module.exports = class Task {
             'addedby': null,
             'via': null,
             'attachments': null
-        }, data);
+        };
 
         this.api = api;
 
-        return proxy(this, ['api'], ['data']);
+        return proxy(this, [], ['data']);
     }
 
     fetch() {
         if (!this.id) {
         }
-    };
+    }
 };

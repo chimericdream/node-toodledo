@@ -1,16 +1,22 @@
 'use strict';
 
-module.exports = class AccountException extends Error {
-    constructor(error, file = '', line = 0) {
-        this.error = error;
-        this.file = file;
-        this.line = line;
-    }
+const ApiException = require('./api');
 
+module.exports = class AccountException extends ApiException {
     get TYPE() {
-        '': {
-            'code': '',
-            'message': ''
-        }
+        return {
+            'SSL_REQUIRED': {
+                'code': 101,
+                'message': 'SSL connection is required when requesting a token.'
+            },
+            'TOKEN_REQUEST_ERROR': {
+                'code': 102,
+                'message': 'There was an error requesting a token.'
+            },
+            'TOO_MANY_TOKEN_REQUESTS': {
+                'code': 103,
+                'message': 'Too many token requests.'
+            }
+        };
     };
 };

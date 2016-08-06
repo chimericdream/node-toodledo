@@ -2,10 +2,11 @@
 
 const _ = require('lodash');
 const proxy = require('proxy-mate');
+const rp = require('request-promise-native');
 
 module.exports = class AccountInfo {
-    constructor(data) {
-        this.data = _.merge({
+    constructor(api) {
+        this.data = {
             'userid': '',
             'alias': '',
             'email': '',
@@ -28,8 +29,23 @@ module.exports = class AccountInfo {
             'lastdelete_note': '',
             'lastedit_list': '',
             'lastedit_outline': ''
-        }, data);
+        };
 
-        return proxy(this, ['data'], ['data']);
+        this.api = api;
+
+        return proxy(this, [], ['data']);
+    }
+
+    fetch() {
+        return rp({
+            uri: `${this.api.baseUrl}/account/get.php?access_token=${this.api.accessToken}`,
+            method: 'GET',
+            json: true
+        }).then((body) => {
+            this.data = _.merge(this.data, body);
+            console.log(this.data);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 };
