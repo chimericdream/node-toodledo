@@ -3,7 +3,9 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class Task {
+const BaseModel = require('./base-model');
+
+module.exports = class Task extends BaseModel {
     get DUE_DATE_MODIFIER() {
         return {
             'DUE_BY': 0,
@@ -54,8 +56,8 @@ module.exports = class Task {
         };
     };
 
-    constructor(api) {
-        this.data = {
+    get defaults() {
+        return {
             'id': null,
             'title': null,
             'modified': null,
@@ -90,11 +92,7 @@ module.exports = class Task {
             'via': null,
             'attachments': null
         };
-
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+    };
 
     fetch() {
         if (!this.id) {

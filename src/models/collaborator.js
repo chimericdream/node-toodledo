@@ -3,13 +3,10 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class Collaborator {
-    constructor(api) {
-        this.data = {
-        };
+const BaseModel = require('./base-model');
 
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+module.exports = class Collaborator extends BaseModel {
+    get defaults() {
+        return {};
+    };
 };

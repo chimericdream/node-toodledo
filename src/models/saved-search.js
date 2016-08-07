@@ -3,13 +3,10 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class SavedSearch {
-    constructor(api) {
-        this.data = {
-        };
+const BaseModel = require('./base-model');
 
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+module.exports = class SavedSearch extends BaseModel {
+    get defaults() {
+        return {};
+    };
 };

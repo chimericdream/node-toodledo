@@ -2,29 +2,24 @@
 
 const rp = require('request-promise-native');
 
+const BaseCollection = require('./base-collection');
 const FolderException = require('../exceptions/folder');
 const FolderModel = require('../models/folder');
 
-module.exports = class Folders {
-    constructor(api) {
-        this.api = api;
-        this.folders = [];
-    }
-
+module.exports = class Folders extends BaseCollection {
     fetch() {
         let url = `${this.api.baseUrl}/folders/get.php?access_token=${this.api.accessToken}`;
-        this.folders.length = 0;
+        this.collection.length = 0;
         return rp({
             uri: url,
             method: 'GET',
             json: true
-        }).then((folders) => {
+        })
+        .then((folders) => {
             folders.forEach((data) => {
-                this.folders.push(new FolderModel(this.api, data));
+                this.collection.push(new FolderModel(this.api).load(data));
             });
-            console.dir(this.folders);
-        }).catch((error) => {
-            console.log(error);
+            this.emit('collection:loaded');
         });
     };
 };

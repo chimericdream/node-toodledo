@@ -3,13 +3,10 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class Outline {
-    constructor(api) {
-        this.data = {
-        };
+const BaseModel = require('./base-model');
 
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+module.exports = class Outline extends BaseModel {
+    get defaults() {
+        return {};
+    };
 };

@@ -3,10 +3,8 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class ApiException extends Error {
+module.exports = class ApiException {
     constructor(errorCode, file = '', line = 0) {
-        super();
-
         this.code = errorCode;
         this.file = file;
         this.line = line;

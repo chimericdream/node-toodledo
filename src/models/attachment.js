@@ -3,16 +3,14 @@
 const _ = require('lodash');
 const proxy = require('proxy-mate');
 
-module.exports = class Attachment {
-    constructor(api) {
-        this.data = {
+const BaseModel = require('./base-model');
+
+module.exports = class Attachment extends BaseModel {
+    get defaults() {
+        return {
             'id': '',
             'kind': '',
             'name': ''
         };
-
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+    };
 };

@@ -4,9 +4,11 @@ const _ = require('lodash');
 const proxy = require('proxy-mate');
 const rp = require('request-promise-native');
 
-module.exports = class AccountInfo {
-    constructor(api) {
-        this.data = {
+const BaseModel = require('./base-model');
+
+module.exports = class AccountInfo extends BaseModel {
+    get defaults() {
+        return {
             'userid': '',
             'alias': '',
             'email': '',
@@ -30,22 +32,13 @@ module.exports = class AccountInfo {
             'lastedit_list': '',
             'lastedit_outline': ''
         };
-
-        this.api = api;
-
-        return proxy(this, [], ['data']);
-    }
+    };
 
     fetch() {
         return rp({
             uri: `${this.api.baseUrl}/account/get.php?access_token=${this.api.accessToken}`,
             method: 'GET',
             json: true
-        }).then((body) => {
-            this.data = _.merge(this.data, body);
-            console.log(this.data);
-        }).catch((error) => {
-            console.log(error);
         });
     }
 };
