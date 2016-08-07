@@ -4,3 +4,4 @@ credentials.json
 tokens.json
 log.*
 *.log
+coverage
