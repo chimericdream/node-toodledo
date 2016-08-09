@@ -6,7 +6,7 @@ module.exports = class Task extends BaseModel {
 
     /* eslint-disable no-magic-numbers */
 
-    get DUE_DATE_MODIFIER() {
+    static get DUE_DATE_MODIFIER() {
         return {
             'DUE_BY': 0,
             'DUE_ON': 1,
@@ -15,7 +15,7 @@ module.exports = class Task extends BaseModel {
         };
     }
 
-    get STATUS() {
+    static get STATUS() {
         return {
             'NONE': 0,
             'NEXT_ACTION': 1,
@@ -31,7 +31,7 @@ module.exports = class Task extends BaseModel {
         };
     }
 
-    get PRIORITY() {
+    static get PRIORITY() {
         return {
             'NEGATIVE': -1,
             'LOW': 0,
@@ -41,7 +41,7 @@ module.exports = class Task extends BaseModel {
         };
     }
 
-    get VIA() {
+    static get VIA() {
         return {
             'WEBSITE': 0,
             'EMAIL': 1,

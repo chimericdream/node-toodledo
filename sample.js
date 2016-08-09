@@ -14,33 +14,25 @@ let api = new TD.API(credentials);
 api.refreshToken = tokens.refreshToken;
 api.accessToken = tokens.accessToken;
 
-//let refreshTokens = function() {
-//    api.refreshAccessToken()
-//        .then((response) => {
-//            console.log(response);
-//            let tokens = {
-//                accessToken: response.access_token,
-//                refreshToken: response.refresh_token
-//            };
-//            api.loadTokens(tokens);
-//            fs.writeFile('tokens.json', JSON.stringify(tokens), () => {
-//                console.log('tokens.json updated successfully');
-//            });
-//        })
-//        .catch((response) => {
-//            console.log(response);
-//            let exception = api.getException(parseInt(response.error.errorCode), 'sample.js', 30);
-//            console.log(exception);
-//        });
-//};
-
-let folders = new TD.FolderCollection(api);
-
-folders.on('collection:loaded', () => {
-    console.dir(folders.collection);
-});
-
-folders.fetch();
+let refreshTokens = function() {
+    api.refreshAccessToken()
+        .then((response) => {
+            console.log(response);
+            let tokens = {
+                accessToken: response.access_token,
+                refreshToken: response.refresh_token
+            };
+            api.loadTokens(tokens);
+            fs.writeFile('tokens.json', JSON.stringify(tokens), () => {
+                console.log('tokens.json updated successfully');
+            });
+        })
+        .catch((response) => {
+            console.log(response);
+            let exception = api.getException(parseInt(response.error.errorCode), 'sample.js');
+            console.log(exception);
+        });
+};
 
 //let accountInfo = new TD.AccountInfo(api);
 //accountInfo.fetch()
@@ -48,7 +40,7 @@ folders.fetch();
 //        accountInfo.load(body);
 //    })
 //    .catch((response) => {
-//        let exception = api.getException(parseInt(response.error.errorCode), 'sample.js', 46);
+//        let exception = api.getException(parseInt(response.error.errorCode), 'sample.js');
 //        if (exception.name === 'INVALID_ACCESS_TOKEN') {
 //            refreshTokens();
 //        } else {
