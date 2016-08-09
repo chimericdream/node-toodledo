@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class OutlineException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'TITLE_REQUIRED': {
@@ -58,5 +61,7 @@ module.exports = class OutlineException extends ApiException {
                 'message': 'Editing wrong version'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };

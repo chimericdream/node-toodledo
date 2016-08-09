@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class TaskException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'MISSING_TITLE': {
@@ -70,5 +73,7 @@ module.exports = class TaskException extends ApiException {
                 'message': 'Unable to reassign or share task'
             }
         };
-    };
+    }
+
+    /* eslint-disable no-magic-numbers, max-len */
 };

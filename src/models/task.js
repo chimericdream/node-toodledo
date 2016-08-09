@@ -1,11 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
-const proxy = require('proxy-mate');
-
 const BaseModel = require('./base-model');
 
 module.exports = class Task extends BaseModel {
+
+    /* eslint-disable no-magic-numbers */
+
     get DUE_DATE_MODIFIER() {
         return {
             'DUE_BY': 0,
@@ -13,7 +13,7 @@ module.exports = class Task extends BaseModel {
             'DUE_AFTER': 2,
             'DUE_OPTIONALLY': 3
         };
-    };
+    }
 
     get STATUS() {
         return {
@@ -29,7 +29,7 @@ module.exports = class Task extends BaseModel {
             'CANCELED': 9,
             'REFERENCE': 10
         };
-    };
+    }
 
     get PRIORITY() {
         return {
@@ -39,7 +39,7 @@ module.exports = class Task extends BaseModel {
             'HIGH': 2,
             'TOP': 3
         };
-    };
+    }
 
     get VIA() {
         return {
@@ -54,7 +54,9 @@ module.exports = class Task extends BaseModel {
             'IMPORT_TOOLS': 8,
             'TWITTER': 9
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers */
 
     get defaults() {
         return {
@@ -92,10 +94,11 @@ module.exports = class Task extends BaseModel {
             'via': null,
             'attachments': null
         };
-    };
+    }
 
     fetch() {
         if (!this.id) {
+            // TODO
         }
     }
 };

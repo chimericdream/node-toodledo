@@ -18,11 +18,11 @@ module.exports = class BaseModel extends EventEmitter {
 
     get defaults() {
         return {};
-    };
+    }
 
     load(properties) {
         this.data = _.merge(this.data, properties);
 
         return this;
-    };
+    }
 };

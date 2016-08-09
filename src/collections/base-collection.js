@@ -1,8 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-const proxy = require('proxy-mate');
-
 const events = require('events');
 const EventEmitter = events.EventEmitter;
 

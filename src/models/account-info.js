@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-const proxy = require('proxy-mate');
 const rp = require('request-promise-native');
 
 const BaseModel = require('./base-model');
@@ -32,13 +30,14 @@ module.exports = class AccountInfo extends BaseModel {
             'lastedit_list': '',
             'lastedit_outline': ''
         };
-    };
+    }
 
     fetch() {
         return rp({
-            uri: `${this.api.baseUrl}/account/get.php?access_token=${this.api.accessToken}`,
-            method: 'GET',
-            json: true
+            // eslint-disable-next-line max-len
+            'uri': `${ this.api.baseUrl }/account/get.php?access_token=${ this.api.accessToken }`,
+            'method': 'GET',
+            'json': true
         });
     }
 };

@@ -1,8 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-const proxy = require('proxy-mate');
-
 const BaseModel = require('./base-model');
 
 module.exports = class Folder extends BaseModel {
@@ -14,5 +11,5 @@ module.exports = class Folder extends BaseModel {
             'archived': 0,
             'ord': 0
         };
-    };
+    }
 };

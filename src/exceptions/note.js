@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class NoteException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'NAME_REQUIRED': {
@@ -38,5 +41,7 @@ module.exports = class NoteException extends ApiException {
                 'message': 'Malformed request'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };

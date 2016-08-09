@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class AccountException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'SSL_REQUIRED': {
@@ -18,5 +21,7 @@ module.exports = class AccountException extends ApiException {
                 'message': 'Too many token requests.'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };

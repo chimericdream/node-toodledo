@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class GoalException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'NAME_REQUIRED': {
@@ -30,5 +33,7 @@ module.exports = class GoalException extends ApiException {
                 'message': 'Nothing was edited.'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };

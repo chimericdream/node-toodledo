@@ -3,6 +3,9 @@
 const ApiException = require('./api');
 
 module.exports = class RowException extends ApiException {
+
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'NO_CELLS_IN_ROW': {
@@ -54,5 +57,7 @@ module.exports = class RowException extends ApiException {
                 'message': 'Editing wrong version'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };

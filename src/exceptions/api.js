@@ -18,6 +18,8 @@ module.exports = class ApiException {
         return proxy(this, ['code', 'file', 'line', 'message', 'name']);
     }
 
+    /* eslint-disable no-magic-numbers, max-len */
+
     get TYPE() {
         return {
             'UNKNOWN_ERROR': {
@@ -30,7 +32,7 @@ module.exports = class ApiException {
             },
             'INVALID_ACCESS_TOKEN': {
                 'code': 2,
-                'message': 'The access token was invalid or had the wrong scope.'
+                'message': 'Access token was invalid or had the wrong scope.'
             },
             'TOO_MANY_REQUESTS': {
                 'code': 3,
@@ -41,5 +43,7 @@ module.exports = class ApiException {
                 'message': 'The API is offline for maintenance.'
             }
         };
-    };
+    }
+
+    /* eslint-enable no-magic-numbers, max-len */
 };
