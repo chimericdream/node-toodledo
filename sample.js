@@ -1,30 +1,53 @@
 'use strict';
 
+/* eslint-disable id-length */
+
 const fs = require('fs');
 const http = require('http');
 const opn = require('opn');
 const url = require('url');
-const util = require('util');
 
 const credentials = require('./credentials');
 const tokens = require('./tokens');
 const TD = require('./src/toodledo-api');
 
-let api = new TD.API(credentials);
-let accountInfo = new TD.AccountInfo(api);
+const HTTP_PORT = 8081;
 
-api.refreshToken = tokens.refreshToken;
-api.accessToken = tokens.accessToken;
+/* eslint-enable id-length */
+
+const api = new TD.API(credentials).loadTokens(tokens);
+const server = http.createServer();
+
+function generateAuthToken() {
+    server.listen(HTTP_PORT);
+    server.on('request', (request, response) => {
+        // eslint-disable-next-line id-length
+        const qs = url.parse(request.url, true).query;
+
+        if (qs.code) {
+            api.authCode = qs.code;
+            api.getAccessToken();
+        }
+        response.end();
+    });
+
+    opn(api.getAuthUrl(), {'app': ['chrome']});
+}
 
 api.on('error', (exception) => {
-    console.dir(exception);
+    if (exception.extra === 'Invalid refresh token') {
+        generateAuthToken();
+    }
 });
 
-api.on('tokens:loaded', (tokens) => {
-    fs.writeFile('tokens.json', JSON.stringify(tokens), () => {
-        console.log('tokens.json updated successfully');
+api.on('tokens:loaded', (newTokens) => {
+    fs.writeFile('tokens.json', JSON.stringify(newTokens), (error) => {
+        // TODO: handle error processing
     });
+    server.close();
 });
+
+const accountInfo = new TD.AccountInfo(api);
 
 accountInfo.on('error', (exception) => {
     if (exception.name === 'INVALID_ACCESS_TOKEN') {
@@ -33,16 +56,3 @@ accountInfo.on('error', (exception) => {
 });
 
 accountInfo.fetch();
-
-//opn(api.getAuthUrl(), {app: ['chrome']});
-
-//let server = http.createServer();
-//server.listen(8081);
-//server.on('request', (request, response) => {
-//    let qs = url.parse(request.url, true).query;
-//    if (qs.code) {
-//        api.authCode = qs.code;
-//        api.getAccessToken();
-//    }
-//    response.end();
-//});

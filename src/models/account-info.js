@@ -43,8 +43,8 @@ module.exports = class AccountInfo extends BaseModel {
             this.load(body);
             this.emit('account-info:loaded');
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
 };

@@ -58,17 +58,17 @@ class ToodledoApi extends EventEmitter {
         super();
 
         this.options = _.merge({
-            clientId: '',
-            clientSecret: '',
-            baseUrl: 'https://api.toodledo.com/3',
-            scopes: {
-                basic: true,
-                tasks: true,
-                notes: true,
-                outlines: true,
-                lists: true,
-                share: true,
-                write: true
+            'clientId': '',
+            'clientSecret': '',
+            'baseUrl': 'https://api.toodledo.com/3',
+            'scopes': {
+                'basic': true,
+                'tasks': true,
+                'notes': true,
+                'outlines': true,
+                'lists': true,
+                'share': true,
+                'write': true
             }
         }, options);
 
@@ -79,10 +79,17 @@ class ToodledoApi extends EventEmitter {
         this.account = null;
 
         this.on('error:raw', (error, file, line) => {
-            let exception = this.getException(
-                parseInt(error.errorCode),
+            let extra;
+
+            if (typeof error.errorDesc !== 'undefined') {
+                extra = error.errorDesc;
+            }
+
+            const exception = this.getException(
+                parseInt(error.errorCode, 10),
                 file,
-                line
+                line,
+                extra
             );
 
             this.emit('error', exception);
@@ -91,9 +98,10 @@ class ToodledoApi extends EventEmitter {
         return proxy(this, ['options'], ['options']);
     }
 
-    getException(errorCode, file = '', line = 0) {
-        console.log(errorCode);
-        let exceptionTypes = {
+    getException(errorCode, file = '', line = 0, extra = '') {
+        /* eslint-disable no-magic-numbers, max-len */
+
+        const exceptionTypes = {
             'AccountException': [101, 102, 103],
             'ApiException': [0, 1, 2, 3, 4],
             'ContextException': [301, 302, 303, 304, 305, 306],
@@ -107,164 +115,156 @@ class ToodledoApi extends EventEmitter {
             'TaskException': [601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617]
         };
 
+        const classes = {
+            AccountException,
+            ApiException,
+            ContextException,
+            FolderException,
+            GoalException,
+            ListException,
+            LocationException,
+            NoteException,
+            OutlineException,
+            RowException,
+            TaskException
+        };
+
+        /* eslint-enable no-magic-numbers, max-len */
+
         let exception;
+
         Object.keys(exceptionTypes).forEach((key) => {
             if (exceptionTypes[key].includes(errorCode)) {
-                switch (key) {
-                    case 'AccountException':
-                        exception = new AccountException(errorCode, file, line);
-                        break;
-                    case 'ApiException':
-                        exception = new ApiException(errorCode, file, line);
-                        break;
-                    case 'ContextException':
-                        exception = new ContextException(errorCode, file, line);
-                        break;
-                    case 'FolderException':
-                        exception = new FolderException(errorCode, file, line);
-                        break;
-                    case 'GoalException':
-                        exception = new GoalException(errorCode, file, line);
-                        break;
-                    case 'ListException':
-                        exception = new ListException(errorCode, file, line);
-                        break;
-                    case 'LocationException':
-                        exception = new LocationException(errorCode, file, line);
-                        break;
-                    case 'NoteException':
-                        exception = new NoteException(errorCode, file, line);
-                        break;
-                    case 'OutlineException':
-                        exception = new OutlineException(errorCode, file, line);
-                        break;
-                    case 'RowException':
-                        exception = new RowException(errorCode, file, line);
-                        break;
-                    case 'TaskException':
-                        exception = new TaskException(errorCode, file, line);
-                        break;
-                }
+                exception = new classes[key](errorCode, file, line, extra);
             }
         });
+
         return exception;
-    };
+    }
 
     loadTokens(tokens) {
         this.accessToken = tokens.accessToken;
         this.refreshToken = tokens.refreshToken;
-    };
+
+        return this;
+    }
 
     getScope() {
-        let str = '';
+        let str;
+
+        str = '';
         Object.keys(this.scopes).forEach((scope) => {
             if (this.scopes[scope]) {
-                str += `${scope}%20`;
+                str += `${ scope }%20`;
             }
         });
-        return str.replace(/^(.+)\%20$/, '$1');
+
+        return str.replace(/^(.+)%20$/, '$1');
     }
 
     getAuthUrl() {
-        return `${this.baseUrl}/account/authorize.php?response_type=code&client_id=${this.clientId}&state=${uuid.v4()}&scope=${this.getScope()}`;
+        // eslint-disable-next-line max-len
+        return `${ this.baseUrl }/account/authorize.php?response_type=code&client_id=${ this.clientId }&state=${ uuid.v4() }&scope=${ this.getScope() }`;
     }
 
     getAccessToken() {
+        const header = btoa(`${ this.clientId }:${ this.clientSecret }`);
+
         return rp({
-            uri: `${this.baseUrl}/account/token.php`,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+            'uri': `${ this.baseUrl }/account/token.php`,
+            'method': 'POST',
+            'headers': {'Authorization': `Basic ${ header }`},
+            'body': {
+                'grant_type': 'authorization_code',
+                'code': this.authCode
             },
-            body: {
-                grant_type: 'authorization_code',
-                code: this.authCode
-            },
-            json: true
+            'json': true
         })
         .then((response) => {
-            let tokens = {
-                accessToken: response.access_token,
-                refreshToken: response.refresh_token
+            const tokens = {
+                'accessToken': response.access_token,
+                'refreshToken': response.refresh_token
             };
+
             this.loadTokens(tokens);
             this.emit('tokens:loaded', tokens);
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
 
     refreshAccessToken() {
+        const header = btoa(`${ this.clientId }:${ this.clientSecret }`);
+
         return rp({
-            uri: `${this.baseUrl}/account/token.php`,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret)
+            'uri': `${ this.baseUrl }/account/token.php`,
+            'method': 'POST',
+            'headers': {'Authorization': `Basic ${ header }`},
+            'body': {
+                'grant_type': 'refresh_token',
+                'refresh_token': this.refreshToken
             },
-            body: {
-                grant_type: 'refresh_token',
-                refresh_token: this.refreshToken
-            },
-            json: true
+            'json': true
         })
         .then((response) => {
-            let tokens = {
-                accessToken: response.access_token,
-                refreshToken: response.refresh_token
+            const tokens = {
+                'accessToken': response.access_token,
+                'refreshToken': response.refresh_token
             };
+
             this.loadTokens(tokens);
             this.emit('tokens:loaded', tokens);
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
-};
+}
 
 module.exports = {
-    API: ToodledoApi,
+    'API': ToodledoApi,
 
     // Exceptions
-    AccountException: AccountException,
-    ApiException: ApiException,
-    ContextException: ContextException,
-    FolderException: FolderException,
-    GoalException: GoalException,
-    ListException: ListException,
-    LocationException: LocationException,
-    NoteException: NoteException,
-    OutlineException: OutlineException,
-    RowException: RowException,
-    TaskException: TaskException,
+    AccountException,
+    ApiException,
+    ContextException,
+    FolderException,
+    GoalException,
+    ListException,
+    LocationException,
+    NoteException,
+    OutlineException,
+    RowException,
+    TaskException,
 
     // Models
-    AccountInfo: AccountInfo,
-    AttachmentModel: AttachmentModel,
-    BaseModel: BaseModel,
-    CollaboratorModel: CollaboratorModel,
-    ContextModel: ContextModel,
-    FolderModel: FolderModel,
-    GoalModel: GoalModel,
-    ListModel: ListModel,
-    LocationModel: LocationModel,
-    NoteModel: NoteModel,
-    OutlineModel: OutlineModel,
-    RowModel: RowModel,
-    SavedSearchModel: SavedSearchModel,
-    TaskModel: TaskModel,
+    AccountInfo,
+    AttachmentModel,
+    BaseModel,
+    CollaboratorModel,
+    ContextModel,
+    FolderModel,
+    GoalModel,
+    ListModel,
+    LocationModel,
+    NoteModel,
+    OutlineModel,
+    RowModel,
+    SavedSearchModel,
+    TaskModel,
 
     // Collections
-    BaseCollection: BaseCollection,
-    CollaboratorCollection: CollaboratorCollection,
-    ContextCollection: ContextCollection,
-    FolderCollection: FolderCollection,
-    GoalCollection: GoalCollection,
-    ListCollection: ListCollection,
-    LocationCollection: LocationCollection,
-    NoteCollection: NoteCollection,
-    OutlineCollection: OutlineCollection,
-    RowCollection: RowCollection,
-    SavedSearchCollection: SavedSearchCollection,
-    TaskCollection: TaskCollection
+    BaseCollection,
+    CollaboratorCollection,
+    ContextCollection,
+    FolderCollection,
+    GoalCollection,
+    ListCollection,
+    LocationCollection,
+    NoteCollection,
+    OutlineCollection,
+    RowCollection,
+    SavedSearchCollection,
+    TaskCollection
 };

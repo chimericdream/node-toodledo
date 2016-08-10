@@ -46,8 +46,8 @@ module.exports = class Folder extends BaseModel {
             this.load(body[0]);
             this.emit('folder:created');
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
 
@@ -70,8 +70,8 @@ module.exports = class Folder extends BaseModel {
             this.load(body[0]);
             this.emit('folder:changed');
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
 
@@ -88,8 +88,8 @@ module.exports = class Folder extends BaseModel {
         .then(() => {
             this.emit('folder:deleted', this);
         })
-        .catch((error) => {
-            this.emit('error:raw', error);
+        .catch((response) => {
+            this.emit('error:raw', response.error);
         });
     }
 };

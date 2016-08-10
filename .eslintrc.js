@@ -1,4 +1,4 @@
-let restrictedModules = [
+const restrictedModules = [
     'assert',
     'buffer',
     'child_process',
@@ -39,7 +39,6 @@ module.exports = {
         }],
         'no-constant-condition': ['error', {'checkLoops': false}],
         'no-control-regex': 'error',
-        //'no-debugger': 'error',
         'no-dupe-args': 'error',
         'no-dupe-keys': 'error',
         'no-duplicate-case': 'error',
@@ -234,17 +233,14 @@ module.exports = {
         'eol-last': ['error', 'unix'],
         'func-names': ['error', 'never'],
         'func-style': ['error', 'declaration', {'allowArrowFunctions': true}],
-//        'id-blacklist': ['error'],
         'id-length': ['error', {
             'min': 3,
             'properties': 'always',
             'exceptions': ['_', '$', 'i', 'rp']
         }],
-//        'id-match': '',
-        'indent': ['error', 4, {
+        'indent': ['warn', 4, {
             'SwitchCase': 1,
-            'VariableDeclarator': 1,
-            'MemberExpression': 1
+            'VariableDeclarator': 1
         }],
         'jsx-quotes': ['error', 'prefer-double'],
         'key-spacing': ['error', {

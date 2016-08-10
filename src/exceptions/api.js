@@ -4,10 +4,11 @@ const _ = require('lodash');
 const proxy = require('proxy-mate');
 
 module.exports = class ApiException {
-    constructor(errorCode, file = '', line = 0) {
+    constructor(errorCode, file = '', line = 0, extra = '') {
         this.code = errorCode;
         this.file = file;
         this.line = line;
+        this.extra = extra;
 
         this.name = _.invertBy(this.TYPE, (value) => {
             return value.code;

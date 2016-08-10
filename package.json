@@ -5,7 +5,8 @@
   "author": "Bill Parrott <bill@chimericdream.com>",
   "homepage": "https://github.com/chimericdream/node-toodledo",
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha \"test/**/*.js\""
+    "test": "istanbul cover node_modules/mocha/bin/_mocha \"test/**/*.js\"",
+    "lint": "eslint src sample.js"
   },
   "main": "src/toodledo-api.js",
   "repository": "chimericdream/node-toodledo",
