@@ -47,7 +47,7 @@ module.exports = class Folder extends BaseModel {
             this.emit('folder:created');
         })
         .catch((error) => {
-            console.log(error);
+            this.emit('error:raw', error);
         });
     }
 
@@ -71,7 +71,7 @@ module.exports = class Folder extends BaseModel {
             this.emit('folder:changed');
         })
         .catch((error) => {
-            console.log(error);
+            this.emit('error:raw', error);
         });
     }
 
@@ -86,10 +86,10 @@ module.exports = class Folder extends BaseModel {
             'json': true
         })
         .then(() => {
-            this.emit('folder:deleted');
+            this.emit('folder:deleted', this);
         })
         .catch((error) => {
-            console.log(error);
+            this.emit('error:raw', error);
         });
     }
 };

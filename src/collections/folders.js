@@ -22,6 +22,9 @@ module.exports = class Folders extends BaseCollection {
                 this.collection.push(new FolderModel(this.api).load(data));
             });
             this.emit('collection:loaded');
+        })
+        .catch((error) => {
+            this.emit('error:raw', error);
         });
     }
 };

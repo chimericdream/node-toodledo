@@ -13,6 +13,16 @@ module.exports = class BaseModel extends EventEmitter {
         this.data = this.defaults;
         this.api = api;
 
+        this.on('error:raw', (error, file, line) => {
+            let exception = this.api.getException(
+                parseInt(error.errorCode),
+                file,
+                line
+            );
+
+            this.emit('error', exception);
+        });
+
         return proxy(this, [], ['data']);
     }
 

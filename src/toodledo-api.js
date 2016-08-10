@@ -78,6 +78,16 @@ class ToodledoApi extends EventEmitter {
 
         this.account = null;
 
+        this.on('error:raw', (error, file, line) => {
+            let exception = this.getException(
+                parseInt(error.errorCode),
+                file,
+                line
+            );
+
+            this.emit('error', exception);
+        });
+
         return proxy(this, ['options'], ['options']);
     }
 
@@ -171,6 +181,17 @@ class ToodledoApi extends EventEmitter {
                 code: this.authCode
             },
             json: true
+        })
+        .then((response) => {
+            let tokens = {
+                accessToken: response.access_token,
+                refreshToken: response.refresh_token
+            };
+            this.loadTokens(tokens);
+            this.emit('tokens:loaded', tokens);
+        })
+        .catch((error) => {
+            this.emit('error:raw', error);
         });
     }
 
@@ -186,6 +207,17 @@ class ToodledoApi extends EventEmitter {
                 refresh_token: this.refreshToken
             },
             json: true
+        })
+        .then((response) => {
+            let tokens = {
+                accessToken: response.access_token,
+                refreshToken: response.refresh_token
+            };
+            this.loadTokens(tokens);
+            this.emit('tokens:loaded', tokens);
+        })
+        .catch((error) => {
+            this.emit('error:raw', error);
         });
     }
 };

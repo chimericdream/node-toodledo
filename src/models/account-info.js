@@ -38,6 +38,13 @@ module.exports = class AccountInfo extends BaseModel {
             'uri': `${ this.api.baseUrl }/account/get.php?access_token=${ this.api.accessToken }`,
             'method': 'GET',
             'json': true
+        })
+        .then((body) => {
+            this.load(body);
+            this.emit('account-info:loaded');
+        })
+        .catch((error) => {
+            this.emit('error:raw', error);
         });
     }
 };
