@@ -56,3 +56,19 @@ accountInfo.on('error', (exception) => {
 });
 
 accountInfo.fetch();
+
+const folders = new TD.FolderCollection(api);
+const contexts = new TD.ContextCollection(api);
+
+folders.on('collection:loaded', () => {
+    console.log('folders loaded');
+    console.dir(folders.collection);
+});
+
+contexts.on('collection:loaded', () => {
+    console.log('contexts loaded');
+    console.dir(contexts.collection);
+});
+
+folders.fetch();
+contexts.fetch();
