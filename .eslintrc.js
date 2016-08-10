@@ -39,6 +39,7 @@ module.exports = {
         }],
         'no-constant-condition': ['error', {'checkLoops': false}],
         'no-control-regex': 'error',
+        'no-debugger': 'error',
         'no-dupe-args': 'error',
         'no-dupe-keys': 'error',
         'no-duplicate-case': 'error',
@@ -282,7 +283,6 @@ module.exports = {
         'max-params': ['warn', {'max': 5}],
         'max-statements-per-line': ['error', {'max': 1}],
         'max-statements': ['warn', {'max': 10}],
-//        'multiline-ternary': '',
         'new-cap': ['error', {
             'newIsCap': true,
             'capIsNew': true,
@@ -296,7 +296,7 @@ module.exports = {
         'newline-per-chained-call': ['error', {'ignoreChainWithDepth': 2}],
         'no-array-constructor': 'error',
         'no-bitwise': 'error',
-//        'no-continue': '',
+        'no-continue': 'error',
         'no-inline-comments': 'error',
         'no-lonely-if': 'error',
         'no-mixed-operators': ['error', {
@@ -319,7 +319,7 @@ module.exports = {
         'no-nested-ternary': 'error',
         'no-new-object': 'error',
         'no-plusplus': ['error', { 'allowForLoopAfterthoughts': true }],
-//        'no-restricted-syntax': '',
+        'no-restricted-syntax': ['error', 'FunctionExpression', 'WithStatement'],
         'no-spaced-func': 'error',
         'no-tabs': 'error',
         'no-ternary': 'warn',
