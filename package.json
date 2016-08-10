@@ -6,8 +6,8 @@
   "homepage": "https://github.com/chimericdream/node-toodledo",
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha \"test/**/*.js\"",
-    "lint": "eslint src sample.js",
-    "devlint": "eslint src sample.js -- --dev"
+    "lint": "eslint src",
+    "devlint": "eslint src -- --dev"
   },
   "main": "src/toodledo-api.js",
   "repository": "chimericdream/node-toodledo",
