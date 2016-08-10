@@ -5,6 +5,8 @@ const rp = require('request-promise-native');
 const BaseModel = require('./base-model');
 
 module.exports = class Goal extends BaseModel {
+    /* eslint-disable no-magic-numbers */
+
     static get LEVEL() {
         return {
             'LIFETIME': 0,
@@ -26,6 +28,8 @@ module.exports = class Goal extends BaseModel {
             'ARCHIVED': 1
         };
     }
+
+    /* eslint-enable no-magic-numbers */
 
     get defaults() {
         return {

@@ -3,7 +3,6 @@
 const BaseModel = require('./base-model');
 
 module.exports = class Task extends BaseModel {
-
     /* eslint-disable no-magic-numbers */
 
     static get DUE_DATE_MODIFIER() {
