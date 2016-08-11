@@ -17,8 +17,8 @@ module.exports = class Goals extends BaseCollection {
             'method': 'GET',
             'json': true
         })
-        .then((contexts) => {
-            contexts.forEach((data) => {
+        .then((goals) => {
+            goals.forEach((data) => {
                 this.collection.push(new GoalModel(this.api).load(data));
             });
             this.emit('collection:loaded');

@@ -17,8 +17,8 @@ module.exports = class Collaborators extends BaseCollection {
             'method': 'GET',
             'json': true
         })
-        .then((contexts) => {
-            contexts.forEach((data) => {
+        .then((collaborators) => {
+            collaborators.forEach((data) => {
                 this.collection.push(new CollaboratorModel(this.api).load(data));
             });
             this.emit('collection:loaded');

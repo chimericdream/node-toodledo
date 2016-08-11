@@ -17,8 +17,8 @@ module.exports = class Locations extends BaseCollection {
             'method': 'GET',
             'json': true
         })
-        .then((contexts) => {
-            contexts.forEach((data) => {
+        .then((locations) => {
+            locations.forEach((data) => {
                 this.collection.push(new LocationModel(this.api).load(data));
             });
             this.emit('collection:loaded');
