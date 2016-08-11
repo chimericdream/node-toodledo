@@ -27,4 +27,10 @@ module.exports = class BaseCollection extends EventEmitter {
             this.emit('error', exception);
         });
     }
+
+    add(item) {
+        this.collection.push(item);
+
+        return this;
+    }
 };
