@@ -11,7 +11,7 @@ The [Mozilla guidelines for writing bug reports](https://developer.mozilla.org/e
 ## Making Changes
 
 * Create a branch from the `master` branch. If your branch contains a fix for a specific issue, it should follow the `issues/{number}` convention. Feature branches should be named `feature/{your-feature-name}`.
-* Commit messages should be clear, and preferably be prefixed with the branch name (e.g. "[issues/123] your message here").
+* Commit messages should be clear, and preferably be prefixed with the branch name (e.g. "[issues/123] your message here"). (Save [this GitHub gist](https://gist.github.com/chimericdream/058548e6a59c2040f52df261e4c502a0) as `.git/hooks/prepare-commit-msg` in your repository to do this automatically.)
 * Run the ESLint script on your changes to ensure consistent code style.
 
 ## Submitting the Pull Request

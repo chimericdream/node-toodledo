@@ -1,5 +1,5 @@
 {
-  "name": "toodledo-api",
+  "name": "node-toodledo",
   "version": "0.0.2-alpha",
   "description": "A simple Node.js module to interact with the Toodledo API",
   "author": "Bill Parrott <bill@chimericdream.com>",
