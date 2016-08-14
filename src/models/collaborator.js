@@ -3,7 +3,6 @@
 const rp = require('request-promise-native');
 
 const BaseModel = require('./base-model');
-const TaskModel = require('./task');
 
 module.exports = class Collaborator extends BaseModel {
     /* eslint-disable no-magic-numbers */

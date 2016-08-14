@@ -94,10 +94,4 @@ module.exports = class Task extends BaseModel {
             'attachments': null
         };
     }
-
-    fetch() {
-        if (!this.id) {
-            // TODO
-        }
-    }
 };

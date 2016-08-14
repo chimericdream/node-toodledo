@@ -35,9 +35,7 @@ module.exports = class Note extends BaseModel {
         return rp({
             'uri': url,
             'method': 'POST',
-            'form': {
-                'id': this.id
-            },
+            'form': {'id': this.id},
             'json': true
         })
         .then((body) => {

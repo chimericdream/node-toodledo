@@ -19,6 +19,7 @@ module.exports = class Collaborators extends BaseCollection {
         })
         .then((collaborators) => {
             collaborators.forEach((data) => {
+                // eslint-disable-next-line max-len
                 this.collection.push(new CollaboratorModel(this.api).load(data));
             });
             this.emit('collection:loaded');
