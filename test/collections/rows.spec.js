@@ -1,4 +1,8 @@
-const RowCollection = require('../../src/collections/rows');const chai = require('chai');
+'use strict';
+
+const RowCollection = require('../../src/collections/rows');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

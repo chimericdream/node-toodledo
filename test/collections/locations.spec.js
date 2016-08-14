@@ -1,4 +1,8 @@
-const LocationCollection = require('../../src/collections/locations');const chai = require('chai');
+'use strict';
+
+const LocationCollection = require('../../src/collections/locations');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

@@ -1,3 +1,5 @@
+'use strict';
+
 const API = require('../src/toodledo-api');
 
 const chai = require('chai');

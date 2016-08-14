@@ -1,3 +1,5 @@
+'use strict';
+
 const btoa = require('../../src/lib/btoa');
 
 const chai = require('chai');

@@ -1,4 +1,8 @@
-const OutlineCollection = require('../../src/collections/outlines');const chai = require('chai');
+'use strict';
+
+const OutlineCollection = require('../../src/collections/outlines');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

@@ -1,4 +1,8 @@
-const ContextCollection = require('../../src/collections/contexts');const chai = require('chai');
+'use strict';
+
+const ContextCollection = require('../../src/collections/contexts');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

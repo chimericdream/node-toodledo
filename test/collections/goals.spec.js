@@ -1,4 +1,8 @@
-const GoalCollection = require('../../src/collections/goals');const chai = require('chai');
+'use strict';
+
+const GoalCollection = require('../../src/collections/goals');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

@@ -1,4 +1,8 @@
-const TaskCollection = require('../../src/collections/tasks');const chai = require('chai');
+'use strict';
+
+const TaskCollection = require('../../src/collections/tasks');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

@@ -1,4 +1,8 @@
-const SavedSearchCollection = require('../../src/collections/saved-searches');const chai = require('chai');
+'use strict';
+
+const SavedSearchCollection = require('../../src/collections/saved-searches');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

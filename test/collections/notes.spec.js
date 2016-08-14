@@ -1,4 +1,8 @@
-const NoteCollection = require('../../src/collections/notes');const chai = require('chai');
+'use strict';
+
+const NoteCollection = require('../../src/collections/notes');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;

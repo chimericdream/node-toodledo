@@ -1,4 +1,8 @@
-const BaseCollection = require('../../src/collections/base-collection');const chai = require('chai');
+'use strict';
+
+const BaseCollection = require('../../src/collections/base-collection');
+
+const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should;
