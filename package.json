@@ -5,7 +5,7 @@
   "author": "Bill Parrott <bill@chimericdream.com>",
   "homepage": "https://github.com/chimericdream/node-toodledo",
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha \"test/**/*.js\"",
+    "test": "istanbul cover node_modules/mocha/bin/_mocha \"test/**/*.spec.js\"",
     "lint": "eslint src",
     "devlint": "eslint src -- --dev"
   },
@@ -29,10 +29,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint-config-chimericdream": "^1.0.1",
     "eslint": "^3.2.2",
+    "eslint-config-chimericdream": "^1.0.1",
     "istanbul": "^0.4.4",
-    "mocha": "^3.0.1"
+    "mocha": "^3.0.1",
+    "sinon": "^1.17.5"
   },
   "license": "MIT"
 }
