@@ -22,7 +22,7 @@ describe('RowModel', () => {
         server.restore();
     });
 
-    it('is not implemented', () => {
+    xit('is not implemented', () => {
         expect(true).to.be.false;
     });
 });

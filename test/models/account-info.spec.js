@@ -1,18 +1,16 @@
 'use strict';
 
-const AccountInfoModel = require('../../src/models/account-info');
-
 const chai = require('chai');
+const rp = require('request-promise-native');
 const sinon = require('sinon');
 
-const rp = require('request-promise-native');
+const AccountInfoModel = require('../../src/models/account-info');
 
-const should = chai.should;
 const expect = chai.expect;
-const assert = chai.assert;
 
 const MOCK_API_URL = 'URL';
-const MOCK_API_ACCESS_TOKEN = 'token';
+const MOCK_API_ACCESS_TOKEN = 'access';
+const MOCK_API_REFRESH_TOKEN = 'refresh';
 
 const MOCK_VALID_RESPONSE_BODY = {
     'userid': 'a1b2c3d4e5f6',
@@ -40,7 +38,8 @@ const MOCK_VALID_RESPONSE_BODY = {
 describe('AccountInfoModel', () => {
     const api = {
         'baseUrl': MOCK_API_URL,
-        'accessToken': MOCK_API_ACCESS_TOKEN
+        'accessToken': MOCK_API_ACCESS_TOKEN,
+        'refreshToken': MOCK_API_REFRESH_TOKEN
     };
     let model;
 
@@ -82,7 +81,7 @@ describe('AccountInfoModel', () => {
             })).to.be.true;
         });
 
-        describe('with a valid access token', () => {
+        describe('when the request is successful', () => {
             beforeEach(() => {
                 rpSpy = sinon.stub(rp, 'get', () => {
                     return Promise.resolve(MOCK_VALID_RESPONSE_BODY);
@@ -91,30 +90,10 @@ describe('AccountInfoModel', () => {
 
             it('loads the proper data into the model', (done) => {
                 model.fetch().then(() => {
-                    /* eslint-disable max-len */
-
-                    expect(model.userid).to.equal(MOCK_VALID_RESPONSE_BODY.userid);
-                    expect(model.alias).to.equal(MOCK_VALID_RESPONSE_BODY.alias);
-                    expect(model.email).to.equal(MOCK_VALID_RESPONSE_BODY.email);
-                    expect(model.pro).to.equal(MOCK_VALID_RESPONSE_BODY.pro);
-                    expect(model.dateformat).to.equal(MOCK_VALID_RESPONSE_BODY.dateformat);
-                    expect(model.timezone).to.equal(MOCK_VALID_RESPONSE_BODY.timezone);
-                    expect(model.hidemonths).to.equal(MOCK_VALID_RESPONSE_BODY.hidemonths);
-                    expect(model.hotlistpriority).to.equal(MOCK_VALID_RESPONSE_BODY.hotlistpriority);
-                    expect(model.hotlistduedate).to.equal(MOCK_VALID_RESPONSE_BODY.hotlistduedate);
-                    expect(model.showtabnums).to.equal(MOCK_VALID_RESPONSE_BODY.showtabnums);
-                    expect(model.lastedit_folder).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_folder);
-                    expect(model.lastedit_context).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_context);
-                    expect(model.lastedit_goal).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_goal);
-                    expect(model.lastedit_location).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_location);
-                    expect(model.lastedit_task).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_task);
-                    expect(model.lastdelete_task).to.equal(MOCK_VALID_RESPONSE_BODY.lastdelete_task);
-                    expect(model.lastedit_note).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_note);
-                    expect(model.lastdelete_note).to.equal(MOCK_VALID_RESPONSE_BODY.lastdelete_note);
-                    expect(model.lastedit_list).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_list);
-                    expect(model.lastedit_outline).to.equal(MOCK_VALID_RESPONSE_BODY.lastedit_outline);
-
-                    /* eslint-enable max-len */
+                    Object.keys(MOCK_VALID_RESPONSE_BODY).forEach((key) => {
+                        // eslint-disable-next-line max-len
+                        expect(model[key]).to.equal(MOCK_VALID_RESPONSE_BODY[key]);
+                    });
 
                     done();
                 });
@@ -126,6 +105,56 @@ describe('AccountInfoModel', () => {
                     expect(emitSpy.calledWith('account-info:loaded')).to.be.true;
 
                     done();
+                });
+            });
+
+            xdescribe('when the response includes unknown data', () => {
+                it('should not load uknown keys into the model', () => {
+                    expect(true).to.be.false;
+                });
+
+                // eslint-disable-next-line max-len
+                it('should log a warning with the names of the unknown keys', () => {
+                    expect(true).to.be.false;
+                });
+            });
+        });
+
+        // http://api.toodledo.com/3/account/doc_info.php
+        xdescribe('when there is an error', () => {
+            describe('when an unknown error occurs (ERR_CODE 0)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
+                });
+            });
+
+            describe('when no access token is specified (ERR_CODE 1)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
+                });
+            });
+
+            describe('when the access token is invalid (ERR_CODE 2)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
+                });
+            });
+
+            describe('when the access token has the wrong scope (ERR_CODE 2)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
+                });
+            });
+
+            describe('when there have been too many API requests (ERR_CODE 3)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
+                });
+            });
+
+            describe('when the API is offline (ERR_CODE 4)', () => {
+                it('is not implemented', () => {
+                    expect(true).to.be.false;
                 });
             });
         });

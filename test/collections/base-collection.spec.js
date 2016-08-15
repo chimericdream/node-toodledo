@@ -10,7 +10,7 @@ const expect = chai.expect;
 const assert = chai.assert;
 
 describe('BaseCollection', () => {
-    it('is not implemented', () => {
+    xit('is not implemented', () => {
         expect(true).to.be.false;
     });
 });
