@@ -53,11 +53,10 @@ describe('GoalCollection', () => {
             collection.fetch();
 
             expect(rpSpy.calledOnce).to.be.true;
-            expect(rpSpy.calledWith({
-                // eslint-disable-next-line max-len
-                'uri': (`${ MOCK_API_URL }/goals/get.php?access_token=${ MOCK_API_ACCESS_TOKEN }`),
-                'json': true
-            })).to.be.true;
+
+            const spyCall = rpSpy.getCall(0);
+            // eslint-disable-next-line max-len
+            expect(spyCall.args[0].uri).to.equal(`${ MOCK_API_URL }/goals/get.php?access_token=${ MOCK_API_ACCESS_TOKEN }`);
         });
 
         describe('when the request is successful', () => {
