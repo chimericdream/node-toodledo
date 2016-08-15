@@ -1,11 +1,12 @@
 'use strict';
 
+const _ = require('lodash');
 const chai = require('chai');
 const rp = require('request-promise-native');
 const sinon = require('sinon');
+const winston = require('winston');
 
 const AccountInfoModel = require('../../src/models/account-info');
-
 const expect = chai.expect;
 
 const MOCK_API_URL = 'URL';
@@ -35,6 +36,17 @@ const MOCK_VALID_RESPONSE_BODY = {
     'lastedit_outline': 1280898329
 };
 
+const MOCK_INVALID_PROPERTIES = {
+    'unknownkey': 'somevalue',
+    'badkey': 'badvalue'
+};
+
+const MOCK_VALID_RESPONSE_BODY_PLUS_UNKNOWN = _.merge(
+    {},
+    MOCK_VALID_RESPONSE_BODY,
+    MOCK_INVALID_PROPERTIES
+);
+
 describe('AccountInfoModel', () => {
     const api = {
         'baseUrl': MOCK_API_URL,
@@ -60,12 +72,6 @@ describe('AccountInfoModel', () => {
             emitSpy = sinon.spy(model, 'emit');
         });
 
-        afterEach(() => {
-            if (rpSpy.isSinonProxy) {
-                rpSpy.restore();
-            }
-        });
-
         it('should use the correct URL', () => {
             rpSpy = sinon.stub(rp, 'get', () => {
                 return Promise.resolve();
@@ -78,43 +84,80 @@ describe('AccountInfoModel', () => {
             const spyCall = rpSpy.getCall(0);
             // eslint-disable-next-line max-len
             expect(spyCall.args[0].uri).to.equal(`${ MOCK_API_URL }/account/get.php?access_token=${ MOCK_API_ACCESS_TOKEN }`);
+
+            rpSpy.restore();
         });
 
         describe('when the request is successful', () => {
-            beforeEach(() => {
-                rpSpy = sinon.stub(rp, 'get', () => {
-                    return Promise.resolve(MOCK_VALID_RESPONSE_BODY);
-                });
-            });
-
-            it('loads the proper data into the model', (done) => {
-                model.fetch().then(() => {
-                    Object.keys(MOCK_VALID_RESPONSE_BODY).forEach((key) => {
-                        // eslint-disable-next-line max-len
-                        expect(model[key]).to.equal(MOCK_VALID_RESPONSE_BODY[key]);
+            describe('when the response does not include extra data', () => {
+                beforeEach(() => {
+                    rpSpy = sinon.stub(rp, 'get', () => {
+                        return Promise.resolve(MOCK_VALID_RESPONSE_BODY);
                     });
-
-                    done();
                 });
-            });
 
-            it('should emit an "account-info:loaded" event', (done) => {
-                model.fetch().then(() => {
-                    expect(emitSpy.calledOnce).to.be.true;
-                    expect(emitSpy.calledWith('account-info:loaded')).to.be.true;
+                afterEach(() => {
+                    rpSpy.restore();
+                });
 
-                    done();
+                it('loads the proper data into the model', (done) => {
+                    model.fetch().then(() => {
+                        Object.keys(MOCK_VALID_RESPONSE_BODY).forEach((key) => {
+                            // eslint-disable-next-line max-len
+                            expect(model[key]).to.equal(MOCK_VALID_RESPONSE_BODY[key]);
+                        });
+
+                        done();
+                    });
+                });
+
+                it('should emit an "account-info:loaded" event', (done) => {
+                    model.fetch().then(() => {
+                        expect(emitSpy.calledOnce).to.be.true;
+                        expect(emitSpy.calledWith('account-info:loaded')).to.be.true;
+
+                        done();
+                    });
                 });
             });
 
             describe('when the response includes unknown data', () => {
-                xit('should not load unknown keys into the model', () => {
-                    expect(true).to.be.false;
+                let loggerSpy;
+
+                beforeEach(() => {
+                    loggerSpy = sinon.stub(winston, 'warn', () => {
+                        return;
+                    });
+
+                    rpSpy = sinon.stub(rp, 'get', () => {
+                        // eslint-disable-next-line max-len
+                        return Promise.resolve(MOCK_VALID_RESPONSE_BODY_PLUS_UNKNOWN);
+                    });
+                });
+
+                afterEach(() => {
+                    rpSpy.restore();
+                    loggerSpy.restore();
+                });
+
+                it('should not load unknown keys into the model', (done) => {
+                    model.fetch().then(() => {
+                        Object.keys(MOCK_INVALID_PROPERTIES).forEach((key) => {
+                            expect(model[key]).to.be.undefined;
+                        });
+
+                        done();
+                    });
                 });
 
                 // eslint-disable-next-line max-len
-                xit('should log a warning with the names of the unknown keys', () => {
-                    expect(true).to.be.false;
+                it('should log a warning with the names of the unknown keys', (done) => {
+                    model.fetch().then(() => {
+                        // eslint-disable-next-line max-len
+                        expect(loggerSpy.callCount).to.equal(Object.keys(MOCK_INVALID_PROPERTIES).length);
+
+                        done();
+                    });
                 });
             });
         });
