@@ -5,6 +5,8 @@ const rp = require('request-promise-native');
 const BaseModel = require('./base-model');
 
 module.exports = class Folder extends BaseModel {
+    /* eslint-disable no-magic-numbers */
+
     static get VISIBILITY() {
         return {
             'SHARABLE': 0,
@@ -19,12 +21,14 @@ module.exports = class Folder extends BaseModel {
         };
     }
 
+    /* eslint-enable no-magic-numbers */
+
     get defaults() {
         return {
             'id': 0,
             'name': '',
-            'private': 0,
-            'archived': 0,
+            'private': Folder.VISIBILITY.SHARABLE,
+            'archived': Folder.STATE.ACTIVE,
             'ord': 0
         };
     }

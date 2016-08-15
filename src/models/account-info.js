@@ -5,12 +5,24 @@ const rp = require('request-promise-native');
 const BaseModel = require('./base-model');
 
 module.exports = class AccountInfo extends BaseModel {
+    /* eslint-disable no-magic-numbers */
+
+    static get SUBSCRIPTION() {
+        return {
+            'FREE': 0,
+            'SILVER': 1,
+            'GOLD': 2
+        };
+    }
+
+    /* eslint-enable no-magic-numbers */
+
     get defaults() {
         return {
             'userid': '',
             'alias': '',
             'email': '',
-            'pro': 0,
+            'pro': AccountInfo.SUBSCRIPTION.FREE,
             'dateformat': 0,
             'timezone': 0,
             'hidemonths': 0,
@@ -33,10 +45,9 @@ module.exports = class AccountInfo extends BaseModel {
     }
 
     fetch() {
-        return rp({
+        return rp.get({
             // eslint-disable-next-line max-len
             'uri': `${ this.api.baseUrl }/account/get.php?access_token=${ this.api.accessToken }`,
-            'method': 'GET',
             'json': true
         })
         .then((body) => {

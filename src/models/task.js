@@ -40,6 +40,13 @@ module.exports = class Task extends BaseModel {
         };
     }
 
+    static get SHARED() {
+        return {
+            'NO': 0,
+            'YES': 1
+        };
+    }
+
     static get VIA() {
         return {
             'WEBSITE': 0,
@@ -59,39 +66,38 @@ module.exports = class Task extends BaseModel {
 
     get defaults() {
         return {
-            'id': null,
-            'title': null,
-            'modified': null,
-            'completed ': null,
-            'folder': null,
-            'context': null,
-            'goal': null,
-            'location': null,
-            'tag': null,
-            'startdate': null,
-            'duedate': null,
-            'duedatemod': null,
-            'starttime': null,
-            'duetime': null,
-            'remind': null,
-            'repeat': null,
-            'status': null,
-            'star': null,
-            'priority': null,
-            'length': null,
-            'timer': null,
-            'added': null,
-            'note': null,
-            'parent': null,
-            'children': null,
-            'order': null,
-            'meta': null,
-            'previous': null,
-            'attachment': null,
-            'shared': null,
-            'addedby': null,
-            'via': null,
-            'attachments': null
+            'id': '',
+            'title': '',
+            'modified': '',
+            'completed ': 0,
+            'folder': 0,
+            'context': 0,
+            'goal': 0,
+            'location': 0,
+            'tag': '',
+            'startdate': '',
+            'duedate': '',
+            'duedatemod': Task.DUE_DATE_MODIFIER.DUE_BY,
+            'starttime': '',
+            'duetime': '',
+            'remind': 0,
+            'repeat': '',
+            'status': Task.STATUS.NONE,
+            'star': 0,
+            'priority': 0,
+            'length': 0,
+            'timer': 0,
+            'added': '',
+            'note': '',
+            'parent': 0,
+            'children': 0,
+            'order': 0,
+            'meta': '',
+            'previous': 0,
+            'attachment': [],
+            'shared': Task.SHARED.NO,
+            'addedby': 0,
+            'via': Task.VIA.API
         };
     }
 };

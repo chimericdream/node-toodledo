@@ -16,7 +16,7 @@ module.exports = class Context extends BaseModel {
         return {
             'id': 0,
             'name': '',
-            'private': 0
+            'private': Context.VISIBILITY.PRIVATE
         };
     }
 

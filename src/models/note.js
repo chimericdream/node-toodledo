@@ -23,7 +23,7 @@ module.exports = class Note extends BaseModel {
             'folder': 0,
             'modified': 0,
             'added': 0,
-            'private': 0,
+            'private': Note.VISIBILITY.SHARABLE,
             'text': ''
         };
     }

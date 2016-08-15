@@ -35,10 +35,10 @@ module.exports = class Goal extends BaseModel {
         return {
             'id': 0,
             'name': '',
-            'level': 0,
+            'level': Goal.LEVEL.LIFETIME,
             'contributes': 0,
-            'archived': 0,
-            'private': 0,
+            'archived': Goal.STATE.ACTIVE,
+            'private': Goal.VISIBILITY.SHARABLE,
             'note': ''
         };
     }

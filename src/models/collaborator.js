@@ -27,8 +27,8 @@ module.exports = class Collaborator extends BaseModel {
         return {
             'id': 0,
             'name': '',
-            'reassignable': 0,
-            'sharable': 0
+            'reassignable': Collaborator.REASSIGNMENT.NOT_GRANTED,
+            'sharable': Collaborator.SHARED_TASKS.NOT_GRANTED
         };
     }
 
