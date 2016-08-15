@@ -47,8 +47,8 @@ describe('AccountInfoModel', () => {
         model = new AccountInfoModel(api);
     });
 
-    xdescribe('constructor()', () => {
-        it('is not implemented', () => {
+    describe('constructor()', () => {
+        xit('is not implemented', () => {
             expect(true).to.be.false;
         });
     });
@@ -107,52 +107,52 @@ describe('AccountInfoModel', () => {
                 });
             });
 
-            xdescribe('when the response includes unknown data', () => {
-                it('should not load uknown keys into the model', () => {
+            describe('when the response includes unknown data', () => {
+                xit('should not load unknown keys into the model', () => {
                     expect(true).to.be.false;
                 });
 
                 // eslint-disable-next-line max-len
-                it('should log a warning with the names of the unknown keys', () => {
+                xit('should log a warning with the names of the unknown keys', () => {
                     expect(true).to.be.false;
                 });
             });
         });
 
         // http://api.toodledo.com/3/account/doc_info.php
-        xdescribe('when there is an error', () => {
+        describe('when there is an error', () => {
             describe('when an unknown error occurs (ERR_CODE 0)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when no access token is specified (ERR_CODE 1)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the access token is invalid (ERR_CODE 2)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the access token has the wrong scope (ERR_CODE 2)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when there have been too many API requests (ERR_CODE 3)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the API is offline (ERR_CODE 4)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });

@@ -170,9 +170,8 @@ class ToodledoApi extends EventEmitter {
     getAccessToken() {
         const header = btoa(`${ this.clientId }:${ this.clientSecret }`);
 
-        return rp({
+        return rp.post({
             'uri': `${ this.baseUrl }/account/token.php`,
-            'method': 'POST',
             'headers': {'Authorization': `Basic ${ header }`},
             'body': {
                 'grant_type': 'authorization_code',
@@ -197,9 +196,8 @@ class ToodledoApi extends EventEmitter {
     refreshAccessToken() {
         const header = btoa(`${ this.clientId }:${ this.clientSecret }`);
 
-        return rp({
+        return rp.post({
             'uri': `${ this.baseUrl }/account/token.php`,
-            'method': 'POST',
             'headers': {'Authorization': `Basic ${ header }`},
             'body': {
                 'grant_type': 'refresh_token',

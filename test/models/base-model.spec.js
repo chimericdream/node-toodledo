@@ -18,12 +18,12 @@ describe('BaseModel', () => {
     });
 
     describe('constructor()', () => {
-        it('sets the default values for the object', () => {
+        xit('sets the default values for the object', () => {
             expect(model.data).to.eql({});
             expect(model.api).to.equal(api);
         });
 
-        it('sets up the exception event handler', () => {
+        xit('sets up the exception event handler', () => {
             expect(model.listenerCount('error:raw')).to.equal(1);
         });
     });
@@ -37,19 +37,19 @@ describe('BaseModel', () => {
             'prop5': 'val5'
         };
 
-        it('returns the model for method chaining', () => {
+        xit('returns the model for method chaining', () => {
             const ret = model.load(data);
 
             expect(ret).to.equal(model);
         });
 
-        it("merges the passed data into the model's properties", () => {
+        xit("merges the passed data into the model's properties", () => {
             model.load(data);
 
             expect(model.data).to.eql(data);
         });
 
-        it('makes the data available directly (i.e. "model.prop" vs "model.data.prop")', () => {
+        xit('makes the data available directly (i.e. "model.prop" vs "model.data.prop")', () => {
             const ret = model.load(data);
 
             expect(model.prop1).to.eql(data.prop1);

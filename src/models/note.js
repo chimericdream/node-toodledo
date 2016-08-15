@@ -53,11 +53,13 @@ module.exports = class Note extends BaseModel {
         return rp.post({
             'uri': url,
             'form': {
-                'title': this.title,
-                'folder': this.folder,
-                'private': this.private,
-                'added': this.added,
-                'text': this.text
+                'notes': [{
+                    'title': this.title,
+                    'folder': this.folder,
+                    'private': this.private,
+                    'added': this.added,
+                    'text': this.text
+                }]
             },
             'json': true
         })
@@ -77,11 +79,13 @@ module.exports = class Note extends BaseModel {
         return rp.post({
             'uri': url,
             'form': {
-                'id': this.id,
-                'title': this.title,
-                'folder': this.folder,
-                'private': this.private,
-                'text': this.text
+                'notes': [{
+                    'id': this.id,
+                    'title': this.title,
+                    'folder': this.folder,
+                    'private': this.private,
+                    'text': this.text
+                }]
             },
             'json': true
         })

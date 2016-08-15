@@ -5,6 +5,7 @@ const rp = require('request-promise-native');
 const sinon = require('sinon');
 
 const FolderCollection = require('../../src/collections/folders');
+const FolderModel = require('../../src/models/folder');
 
 const expect = chai.expect;
 
@@ -12,7 +13,10 @@ const MOCK_API_URL = 'URL';
 const MOCK_API_ACCESS_TOKEN = 'access';
 const MOCK_API_REFRESH_TOKEN = 'refresh';
 
-const MOCK_VALID_RESPONSE_BODY = {};
+const MOCK_VALID_ID = 1;
+const MOCK_INVALID_ID = 2;
+
+const MOCK_VALID_FETCH_RESPONSE = {};
 
 describe('FolderCollection', () => {
     const api = {
@@ -26,8 +30,8 @@ describe('FolderCollection', () => {
         collection = new FolderCollection(api);
     });
 
-    xdescribe('constructor()', () => {
-        it('is not implemented', () => {
+    describe('constructor()', () => {
+        xit('is not implemented', () => {
             expect(true).to.be.false;
         });
     });
@@ -45,7 +49,7 @@ describe('FolderCollection', () => {
             }
         });
 
-        it('should use the correct URL', () => {
+        xit('should use the correct URL', () => {
             rpSpy = sinon.stub(rp, 'get', () => {
                 return Promise.resolve();
             });
@@ -62,7 +66,7 @@ describe('FolderCollection', () => {
         describe('when the request is successful', () => {
             beforeEach(() => {
                 rpSpy = sinon.stub(rp, 'get', () => {
-                    return Promise.resolve(MOCK_VALID_RESPONSE_BODY);
+                    return Promise.resolve(MOCK_VALID_FETCH_RESPONSE);
                 });
             });
 
@@ -79,62 +83,62 @@ describe('FolderCollection', () => {
                 });
             });
 
-            xdescribe('when the response includes unknown data', () => {
-                it('should not load uknown keys into the collection', () => {
+            describe('when the response includes unknown data', () => {
+                xit('should not load unknown keys into the collection', () => {
                     expect(true).to.be.false;
                 });
 
                 // eslint-disable-next-line max-len
-                it('should log a warning with the names of the unknown keys', () => {
+                xit('should log a warning with the names of the unknown keys', () => {
                     expect(true).to.be.false;
                 });
             });
 
-            xdescribe('when there are no folders found', () => {
-                it('should not have anything in the collection', () => {
+            describe('when there are no folders found', () => {
+                xit('should not have anything in the collection', () => {
                     expect(true).to.be.false;
                 });
 
-                it('should log an info message', () => {
+                xit('should log an info message', () => {
                     expect(true).to.be.false;
                 });
             });
         });
 
         // http://api.toodledo.com/3/folders/index.php
-        xdescribe('when there is an error', () => {
+        describe('when there is an error', () => {
             describe('when an unknown error occurs (ERR_CODE 0)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when no access token is specified (ERR_CODE 1)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the access token is invalid (ERR_CODE 2)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the access token has the wrong scope (ERR_CODE 2)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when there have been too many API requests (ERR_CODE 3)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
 
             describe('when the API is offline (ERR_CODE 4)', () => {
-                it('is not implemented', () => {
+                xit('is not implemented', () => {
                     expect(true).to.be.false;
                 });
             });
