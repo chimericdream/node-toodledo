@@ -37,9 +37,8 @@ module.exports = class Folder extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/folders/add.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'name': this.name,
                 'private': this.private
@@ -59,9 +58,8 @@ module.exports = class Folder extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/folders/edit.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': this.id,
                 'name': this.name,
@@ -83,9 +81,8 @@ module.exports = class Folder extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/folders/delete.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'id': this.id},
             'json': true
         })

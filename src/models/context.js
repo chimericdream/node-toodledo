@@ -24,9 +24,8 @@ module.exports = class Context extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/contexts/add.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'name': this.name,
                 'private': this.private
@@ -46,9 +45,8 @@ module.exports = class Context extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/contexts/edit.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': this.id,
                 'name': this.name,
@@ -69,9 +67,8 @@ module.exports = class Context extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/contexts/delete.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'id': this.id},
             'json': true
         })

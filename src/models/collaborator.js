@@ -36,9 +36,8 @@ module.exports = class Collaborator extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/tasks/reassign.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': task.id,
                 'assign': this.id

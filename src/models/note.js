@@ -32,9 +32,8 @@ module.exports = class Note extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/notes/get.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'id': this.id},
             'json': true
         })
@@ -51,9 +50,8 @@ module.exports = class Note extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/notes/add.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'title': this.title,
                 'folder': this.folder,
@@ -76,9 +74,8 @@ module.exports = class Note extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/notes/edit.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': this.id,
                 'title': this.title,
@@ -101,9 +98,8 @@ module.exports = class Note extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/notes/delete.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'notes': [this.id]},
             'json': true
         })

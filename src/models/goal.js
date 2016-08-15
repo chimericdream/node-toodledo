@@ -47,9 +47,8 @@ module.exports = class Goal extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/goals/add.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'name': this.name,
                 'private': this.private
@@ -69,9 +68,8 @@ module.exports = class Goal extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/goals/edit.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': this.id,
                 'name': this.name,
@@ -93,9 +91,8 @@ module.exports = class Goal extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/goals/delete.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'id': this.id},
             'json': true
         })

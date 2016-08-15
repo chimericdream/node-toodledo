@@ -19,9 +19,8 @@ module.exports = class Location extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/locations/add.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'name': this.name,
                 'description': this.description,
@@ -43,9 +42,8 @@ module.exports = class Location extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/locations/edit.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': this.id,
                 'name': this.name,
@@ -68,9 +66,8 @@ module.exports = class Location extends BaseModel {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/locations/delete.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {'id': this.id},
             'json': true
         })

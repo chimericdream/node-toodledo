@@ -12,9 +12,8 @@ module.exports = class Locations extends BaseCollection {
 
         this.collection.length = 0;
 
-        return rp({
+        return rp.get({
             'uri': url,
-            'method': 'GET',
             'json': true
         })
         .then((locations) => {

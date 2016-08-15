@@ -12,9 +12,8 @@ module.exports = class Collaborators extends BaseCollection {
 
         this.collection.length = 0;
 
-        return rp({
+        return rp.get({
             'uri': url,
-            'method': 'GET',
             'json': true
         })
         .then((collaborators) => {
@@ -33,9 +32,8 @@ module.exports = class Collaborators extends BaseCollection {
         // eslint-disable-next-line max-len
         const url = `${ this.api.baseUrl }/tasks/reassign.php?access_token=${ this.api.accessToken }`;
 
-        return rp({
+        return rp.post({
             'uri': url,
-            'method': 'POST',
             'form': {
                 'id': task.id,
                 'share': collaborators.map((collaborator) => {

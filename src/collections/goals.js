@@ -12,9 +12,8 @@ module.exports = class Goals extends BaseCollection {
 
         this.collection.length = 0;
 
-        return rp({
+        return rp.get({
             'uri': url,
-            'method': 'GET',
             'json': true
         })
         .then((goals) => {
