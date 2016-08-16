@@ -71,6 +71,10 @@ module.exports = class TaskException extends ApiException {
             'UNABLE_TO_REASSIGN': {
                 'code': 616,
                 'message': 'Unable to reassign or share task'
+            },
+            'SUBSCRIPTION_REQUIRED': {
+                'code': 617,
+                'message': 'Requires Toodledo subscription'
             }
         };
     }
