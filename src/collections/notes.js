@@ -15,7 +15,7 @@ module.exports = class Notes extends BaseCollection {
     /* eslint-enable no-magic-numbers */
 
     constructor(api) {
-        super();
+        super(api);
 
         this.searchParameters = {
             'before': -1,
