@@ -9,6 +9,7 @@ module.exports = class ApiException {
         this.file = file;
         this.line = line;
         this.extra = extra;
+        this.type = this.constructor.name;
 
         this.name = _.invertBy(this.TYPE, (value) => {
             return value.code;
