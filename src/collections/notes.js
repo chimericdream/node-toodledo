@@ -18,32 +18,45 @@ module.exports = class Notes extends BaseCollection {
         super(api);
 
         this.searchParameters = {
+            // eslint-disable-next-line no-magic-numbers
             'before': -1,
+
+            // eslint-disable-next-line no-magic-numbers
             'after': -1,
             'start': 0,
             'num': Notes.FETCH_LIMIT
         };
     }
 
+    /* eslint-disable complexity, max-statements */
+
     buildFetchUrl(base) {
         let url;
 
         url = base;
+
+        // eslint-disable-next-line no-magic-numbers
         if (this.searchParameters.before !== -1) {
             url += `&before=${ this.searchParameters.before }`;
         }
+
+        // eslint-disable-next-line no-magic-numbers
         if (this.searchParameters.after !== -1) {
             url += `&after=${ this.searchParameters.after }`;
         }
+
         if (this.searchParameters.start !== 0) {
             url += `&start=${ this.searchParameters.start }`;
         }
+
         if (this.searchParameters.num !== Notes.FETCH_LIMIT) {
             url += `&num=${ this.searchParameters.num }`;
         }
 
         return url;
     }
+
+    /* eslint-enable complexity, max-statements */
 
     fetch() {
         // eslint-disable-next-line max-len
@@ -52,7 +65,7 @@ module.exports = class Notes extends BaseCollection {
         this.collection.length = 0;
 
         return rp.get({
-            'uri': buildFetchUrl(url),
+            'uri': this.buildFetchUrl(url),
             'json': true
         })
         .then((notes) => {
