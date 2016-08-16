@@ -100,44 +100,5 @@ describe('GoalCollection', () => {
                 });
             });
         });
-
-        // http://api.toodledo.com/3/goals/index.php
-        describe('when there is an error', () => {
-            describe('when an unknown error occurs (ERR_CODE 0)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when no access token is specified (ERR_CODE 1)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the access token is invalid (ERR_CODE 2)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the access token has the wrong scope (ERR_CODE 2)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when there have been too many API requests (ERR_CODE 3)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the API is offline (ERR_CODE 4)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-        });
     });
 });

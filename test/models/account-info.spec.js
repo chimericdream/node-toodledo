@@ -41,6 +41,11 @@ const MOCK_INVALID_PROPERTIES = {
     'badkey': 'badvalue'
 };
 
+const ERR0_RESPONSE = {'error': {
+    'errorCode': 0,
+    'errorDesc': 'Your note must have a name'
+}};
+
 const MOCK_VALID_RESPONSE_BODY_PLUS_UNKNOWN = _.merge(
     {},
     MOCK_VALID_RESPONSE_BODY,
@@ -51,7 +56,8 @@ describe('AccountInfoModel', () => {
     const api = {
         'baseUrl': MOCK_API_URL,
         'accessToken': MOCK_API_ACCESS_TOKEN,
-        'refreshToken': MOCK_API_REFRESH_TOKEN
+        'refreshToken': MOCK_API_REFRESH_TOKEN,
+        'getException': function() {}
     };
     let model;
 
@@ -70,6 +76,10 @@ describe('AccountInfoModel', () => {
 
         beforeEach(() => {
             emitSpy = sinon.spy(model, 'emit');
+        });
+
+        afterEach(() => {
+            emitSpy.restore();
         });
 
         it('should use the correct URL', () => {
@@ -158,45 +168,6 @@ describe('AccountInfoModel', () => {
 
                         done();
                     });
-                });
-            });
-        });
-
-        // http://api.toodledo.com/3/account/doc_info.php
-        describe('when there is an error', () => {
-            describe('when an unknown error occurs (ERR_CODE 0)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when no access token is specified (ERR_CODE 1)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the access token is invalid (ERR_CODE 2)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the access token has the wrong scope (ERR_CODE 2)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when there have been too many API requests (ERR_CODE 3)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
-                });
-            });
-
-            describe('when the API is offline (ERR_CODE 4)', () => {
-                xit('is not implemented', () => {
-                    expect(true).to.be.false;
                 });
             });
         });
